@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SurveyAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AllAnswers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="QuestionId" Type="int" Nullable="false" />
+    <Property Name="AnswerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnswerSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Answer1" Type="binary" MaxLength="50" Nullable="false" />
+    <Property Name="Answer2" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Answer3" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QuestionSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Question1" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Question2" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Question3" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AllAnswers_ToTable">
+    <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
+    <End Role="AllAnswers" Type="Self.AllAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AllAnswers">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AllAnswers_ToTable_1">
+    <End Role="AnswerSet" Type="Self.AnswerSet" Multiplicity="1" />
+    <End Role="AllAnswers" Type="Self.AllAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnswerSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AllAnswers">
+        <PropertyRef Name="AnswerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SurveyAppModelStoreContainer">
+    <EntitySet Name="AllAnswers" EntityType="Self.AllAnswers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnswerSet" EntityType="Self.AnswerSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QuestionSet" EntityType="Self.QuestionSet" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AllAnswers_ToTable" Association="Self.FK_AllAnswers_ToTable">
+      <End Role="QuestionSet" EntitySet="QuestionSet" />
+      <End Role="AllAnswers" EntitySet="AllAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AllAnswers_ToTable_1" Association="Self.FK_AllAnswers_ToTable_1">
+      <End Role="AnswerSet" EntitySet="AnswerSet" />
+      <End Role="AllAnswers" EntitySet="AllAnswers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

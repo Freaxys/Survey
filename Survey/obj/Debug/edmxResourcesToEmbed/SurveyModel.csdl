@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SurveyAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AllAnswers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="AnswerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="QuestionSet" Relationship="Self.FK_AllAnswers_ToTable" FromRole="AllAnswers" ToRole="QuestionSet" />
+    <NavigationProperty Name="AnswerSet" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AllAnswers" ToRole="AnswerSet" />
+  </EntityType>
+  <EntityType Name="AnswerSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Answer1" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
+    <Property Name="Answer2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Answer3" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AnswerSet" ToRole="AllAnswers" />
+  </EntityType>
+  <EntityType Name="QuestionSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Question2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Question3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable" FromRole="QuestionSet" ToRole="AllAnswers" />
+  </EntityType>
+  <Association Name="FK_AllAnswers_ToTable">
+    <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
+    <End Role="AllAnswers" Type="SurveyAppModel.AllAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AllAnswers">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AllAnswers_ToTable_1">
+    <End Role="AnswerSet" Type="Self.AnswerSet" Multiplicity="1" />
+    <End Role="AllAnswers" Type="SurveyAppModel.AllAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnswerSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AllAnswers">
+        <PropertyRef Name="AnswerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SurveyAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AllAnswers1" EntityType="SurveyAppModel.AllAnswers" />
+    <EntitySet Name="AnswerSets" EntityType="Self.AnswerSet" />
+    <EntitySet Name="QuestionSets" EntityType="Self.QuestionSet" />
+    <AssociationSet Name="FK_AllAnswers_ToTable" Association="Self.FK_AllAnswers_ToTable">
+      <End Role="QuestionSet" EntitySet="QuestionSets" />
+      <End Role="AllAnswers" EntitySet="AllAnswers1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AllAnswers_ToTable_1" Association="Self.FK_AllAnswers_ToTable_1">
+      <End Role="AnswerSet" EntitySet="AnswerSets" />
+      <End Role="AllAnswers" EntitySet="AllAnswers1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SurveyAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AllAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswerSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Answer1" Type="binary" MaxLength="50" Nullable="false" />
+          <Property Name="Answer2" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Answer3" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question1" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Question2" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Question3" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AllAnswers_ToTable">
+          <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
+          <End Role="AllAnswers" Type="Self.AllAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllAnswers_ToTable_1">
+          <End Role="AnswerSet" Type="Self.AnswerSet" Multiplicity="1" />
+          <End Role="AllAnswers" Type="Self.AllAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllAnswers">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyAppModelStoreContainer">
+          <EntitySet Name="AllAnswers" EntityType="Self.AllAnswers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerSet" EntityType="Self.AnswerSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionSet" EntityType="Self.QuestionSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AllAnswers_ToTable" Association="Self.FK_AllAnswers_ToTable">
+            <End Role="QuestionSet" EntitySet="QuestionSet" />
+            <End Role="AllAnswers" EntitySet="AllAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllAnswers_ToTable_1" Association="Self.FK_AllAnswers_ToTable_1">
+            <End Role="AnswerSet" EntitySet="AnswerSet" />
+            <End Role="AllAnswers" EntitySet="AllAnswers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveyAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AllAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QuestionSet" Relationship="Self.FK_AllAnswers_ToTable" FromRole="AllAnswers" ToRole="QuestionSet" />
+          <NavigationProperty Name="AnswerSet" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AllAnswers" ToRole="AnswerSet" />
+        </EntityType>
+        <EntityType Name="AnswerSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Answer1" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
+          <Property Name="Answer2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Answer3" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AnswerSet" ToRole="AllAnswers" />
+        </EntityType>
+        <EntityType Name="QuestionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Question2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Question3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable" FromRole="QuestionSet" ToRole="AllAnswers" />
+        </EntityType>
+        <Association Name="FK_AllAnswers_ToTable">
+          <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
+          <End Role="AllAnswers" Type="SurveyAppModel.AllAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllAnswers_ToTable_1">
+          <End Role="AnswerSet" Type="Self.AnswerSet" Multiplicity="1" />
+          <End Role="AllAnswers" Type="SurveyAppModel.AllAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllAnswers">
+              <PropertyRef Name="AnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AllAnswers1" EntityType="SurveyAppModel.AllAnswers" />
+          <EntitySet Name="AnswerSets" EntityType="Self.AnswerSet" />
+          <EntitySet Name="QuestionSets" EntityType="Self.QuestionSet" />
+          <AssociationSet Name="FK_AllAnswers_ToTable" Association="Self.FK_AllAnswers_ToTable">
+            <End Role="QuestionSet" EntitySet="QuestionSets" />
+            <End Role="AllAnswers" EntitySet="AllAnswers1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllAnswers_ToTable_1" Association="Self.FK_AllAnswers_ToTable_1">
+            <End Role="AnswerSet" EntitySet="AnswerSets" />
+            <End Role="AllAnswers" EntitySet="AllAnswers1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveyAppModelStoreContainer" CdmEntityContainer="SurveyAppEntities">
+          <EntitySetMapping Name="AllAnswers1">
+            <EntityTypeMapping TypeName="SurveyAppModel.AllAnswers">
+              <MappingFragment StoreEntitySet="AllAnswers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerSets">
+            <EntityTypeMapping TypeName="SurveyAppModel.AnswerSet">
+              <MappingFragment StoreEntitySet="AnswerSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Answer1" ColumnName="Answer1" />
+                <ScalarProperty Name="Answer2" ColumnName="Answer2" />
+                <ScalarProperty Name="Answer3" ColumnName="Answer3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionSets">
+            <EntityTypeMapping TypeName="SurveyAppModel.QuestionSet">
+              <MappingFragment StoreEntitySet="QuestionSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question1" ColumnName="Question1" />
+                <ScalarProperty Name="Question2" ColumnName="Question2" />
+                <ScalarProperty Name="Question3" ColumnName="Question3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
