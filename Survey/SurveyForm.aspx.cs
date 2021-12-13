@@ -24,6 +24,11 @@ namespace Survey
             cmd.ExecuteNonQuery();
             connection.Close();
         }
+
+        public void GetQuestions()
+        {
+          
+        }
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,6 +42,11 @@ namespace Survey
             string commentValue = txtOpen.Text;
 
             Save(scaleValue, booleanValue, commentValue);
+
+            radioScale.SelectedIndex = 0;
+            radioBool.SelectedIndex = 0;
+            txtOpen.Text = "";
+
         }
     }
 }
