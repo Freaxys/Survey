@@ -27,12 +27,29 @@ namespace Survey
 
         public void GetQuestions()
         {
-          
+            var context = new SurveyAppEntities();
+
+            int OneAboveId = 4;
+
+            var questions = from q in context.GetQuestions(OneAboveId)
+                            select new
+                            {
+                                q
+                            };
+            List<string> ques = new List<string>();
+
+            foreach (var result in questions)
+            {
+                ques.Add(result.q);
+            }
+            FQuestion.Text = ques.ElementAt(0);
+            SQuestion.Text = ques.ElementAt(1);
+            TQuestion.Text = ques.ElementAt(2);            
         }
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            GetQuestions();
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

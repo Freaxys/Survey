@@ -15,9 +15,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Answer1" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
-    <Property Name="Answer2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Answer3" Type="Boolean" Nullable="false" />
+    <Property Name="Answer1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Answer2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Answer3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AnswerSet" ToRole="AllAnswers" />
   </EntityType>
   <EntityType Name="QuestionSet">
@@ -25,10 +25,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Question1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Question2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Question3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable" FromRole="QuestionSet" ToRole="AllAnswers" />
+    <Property Name="Question" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_AllAnswers_ToTable">
     <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
@@ -66,5 +64,13 @@
       <End Role="AnswerSet" EntitySet="AnswerSets" />
       <End Role="AllAnswers" EntitySet="AllAnswers1" />
     </AssociationSet>
+    <FunctionImport Name="GetQuestions" IsComposable="true" ReturnType="Collection(String)">
+      <Parameter Name="param1" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SaveForm">
+      <Parameter Name="scale" Mode="In" Type="String" />
+      <Parameter Name="yesOrNo" Mode="In" Type="String" />
+      <Parameter Name="comment" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

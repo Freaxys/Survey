@@ -23,12 +23,12 @@
     <EntitySetMapping Name="QuestionSets">
       <EntityTypeMapping TypeName="SurveyAppModel.QuestionSet">
         <MappingFragment StoreEntitySet="QuestionSet">
+          <ScalarProperty Name="Question" ColumnName="Question" />
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Question1" ColumnName="Question1" />
-          <ScalarProperty Name="Question2" ColumnName="Question2" />
-          <ScalarProperty Name="Question3" ColumnName="Question3" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetQuestions" FunctionName="SurveyAppModel.Store.GetQuestions" />
+    <FunctionImportMapping FunctionImportName="SaveForm" FunctionName="SurveyAppModel.Store.SaveForm" />
   </EntityContainerMapping>
 </Mapping>

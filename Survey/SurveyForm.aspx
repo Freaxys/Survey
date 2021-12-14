@@ -23,7 +23,7 @@
 
                 <tr>
                     <td style="text-align:center" class="auto-style8">
-            Rate your overall experience using our service:
+                        <asp:Label ID="FQuestion" runat="server" Text="Label"></asp:Label>
                     </td>
                 </tr>
 
@@ -43,7 +43,7 @@
 
                 <tr>
                     <td style="text-align:center" class="auto-style8">
-            Did you get what you were looking for?
+                        <asp:Label ID="SQuestion" runat="server" Text="Label"></asp:Label>
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +60,8 @@
 
                 <tr>
                     <td style="text-align:center" class="auto-style8">
-            Share with us your thoughts about our service:<br />
+                        <asp:Label ID="TQuestion" runat="server" Text="Label"></asp:Label>
+                        <br />
                     </td>
                 </tr>
 

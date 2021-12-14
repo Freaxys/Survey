@@ -21,9 +21,9 @@ namespace Survey
         }
     
         public int Id { get; set; }
-        public byte[] Answer1 { get; set; }
+        public string Answer1 { get; set; }
         public string Answer2 { get; set; }
-        public bool Answer3 { get; set; }
+        public string Answer3 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AllAnswers> AllAnswers { get; set; }

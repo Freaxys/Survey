@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SurveyAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SurveyAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AllAnswers">
           <Key>
             <PropertyRef Name="Id" />
@@ -18,18 +18,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Answer1" Type="binary" MaxLength="50" Nullable="false" />
-          <Property Name="Answer2" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="Answer3" Type="bit" Nullable="false" />
+          <Property Name="Answer1" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Answer2" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Answer3" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionSet">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Question1" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Question2" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Question3" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <Association Name="FK_AllAnswers_ToTable">
           <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
@@ -55,6 +53,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetQuestions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="param1" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Question" Type="varchar" MaxLength="255" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="SaveForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="scale" Type="varchar" Mode="In" />
+          <Parameter Name="yesOrNo" Type="varchar" Mode="In" />
+          <Parameter Name="comment" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="SurveyAppModelStoreContainer">
           <EntitySet Name="AllAnswers" EntityType="Self.AllAnswers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerSet" EntityType="Self.AnswerSet" Schema="dbo" store:Type="Tables" />
@@ -68,8 +81,7 @@
             <End Role="AllAnswers" EntitySet="AllAnswers" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SurveyAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -88,9 +100,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Answer1" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
-          <Property Name="Answer2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Answer3" Type="Boolean" Nullable="false" />
+          <Property Name="Answer1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Answer2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Answer3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable_1" FromRole="AnswerSet" ToRole="AllAnswers" />
         </EntityType>
         <EntityType Name="QuestionSet">
@@ -98,10 +110,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Question1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Question2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Question3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="AllAnswers" Relationship="Self.FK_AllAnswers_ToTable" FromRole="QuestionSet" ToRole="AllAnswers" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_AllAnswers_ToTable">
           <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
@@ -139,6 +149,14 @@
             <End Role="AnswerSet" EntitySet="AnswerSets" />
             <End Role="AllAnswers" EntitySet="AllAnswers1" />
           </AssociationSet>
+          <FunctionImport Name="GetQuestions" IsComposable="true" ReturnType="Collection(String)">
+          <Parameter Name="param1" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SaveForm">
+            <Parameter Name="scale" Mode="In" Type="String" />
+            <Parameter Name="yesOrNo" Mode="In" Type="String" />
+            <Parameter Name="comment" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -168,13 +186,13 @@
           <EntitySetMapping Name="QuestionSets">
             <EntityTypeMapping TypeName="SurveyAppModel.QuestionSet">
               <MappingFragment StoreEntitySet="QuestionSet">
+                <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Question1" ColumnName="Question1" />
-                <ScalarProperty Name="Question2" ColumnName="Question2" />
-                <ScalarProperty Name="Question3" ColumnName="Question3" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetQuestions" FunctionName="SurveyAppModel.Store.GetQuestions" />
+          <FunctionImportMapping FunctionImportName="SaveForm" FunctionName="SurveyAppModel.Store.SaveForm" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

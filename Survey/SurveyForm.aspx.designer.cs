@@ -24,6 +24,15 @@ namespace Survey
         protected global::System.Web.UI.WebControls.Label lblWelcome;
 
         /// <summary>
+        /// FQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FQuestion;
+
+        /// <summary>
         /// radioScale control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace Survey
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList radioScale;
+
+        /// <summary>
+        /// SQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SQuestion;
 
         /// <summary>
         /// radioBool control.
@@ -49,6 +67,15 @@ namespace Survey
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+
+        /// <summary>
+        /// TQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TQuestion;
 
         /// <summary>
         /// txtOpen control.

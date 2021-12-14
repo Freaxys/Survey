@@ -13,18 +13,16 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Answer1" Type="binary" MaxLength="50" Nullable="false" />
-    <Property Name="Answer2" Type="varchar" MaxLength="500" Nullable="false" />
-    <Property Name="Answer3" Type="bit" Nullable="false" />
+    <Property Name="Answer1" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Answer2" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Answer3" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="QuestionSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Question1" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="Question2" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="Question3" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Question" Type="varchar" MaxLength="255" Nullable="false" />
   </EntityType>
   <Association Name="FK_AllAnswers_ToTable">
     <End Role="QuestionSet" Type="Self.QuestionSet" Multiplicity="1" />
@@ -50,6 +48,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetQuestions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="param1" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Question" Type="varchar" MaxLength="255" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="SaveForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="scale" Type="varchar" Mode="In" />
+    <Parameter Name="yesOrNo" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+  </Function>
   <EntityContainer Name="SurveyAppModelStoreContainer">
     <EntitySet Name="AllAnswers" EntityType="Self.AllAnswers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AnswerSet" EntityType="Self.AnswerSet" Schema="dbo" store:Type="Tables" />

@@ -22,7 +22,7 @@
             <table class="auto-style1">
                 <tr>
                     <td style="text-align:center">
-                        <asp:Label ID="Label1" runat="server" Font-Names="Calibri" Font-Size="XX-Large" Font-Underline="True" Text="Anonymous Survey."></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Font-Names="Calibri" Font-Size="XX-Large" Font-Underline="True" Text="Anonymous Survey"></asp:Label>
                     </td>
                 </tr>
                 <tr>
