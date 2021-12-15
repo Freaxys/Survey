@@ -9,9 +9,9 @@ namespace Survey
 {
     public partial class Contact : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-
+            base.OnLoad(e);
         }
     }
 }
